@@ -1,0 +1,30 @@
+.header {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  top: 0;
+  background-color: #1a1b24;
+  height: 50px;
+  line-height: 50px;
+}
+
+.header-text {
+  font-size: 1.5rem;
+  text-align: left;
+  text-indent: 10px;
+  color: #8fcefa;
+}
+
+.sign-in {
+  font-size: 1.2rem;
+  padding: 5px 10px;
+}
+
+.sign-out {
+  right: 0;
+}
+
+.container {
+  display: grid;
+  height: 100vh;
+  place-items: center;
+}
