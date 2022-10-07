@@ -4,7 +4,7 @@ import './App.css';
 // import ChatRoom from './ChatRoom';
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, setDoc, query, orderBy, limit } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -71,11 +71,36 @@ function SignOut() {
 function ChatRoom() {
 
   const messagesRef = collection(db, "messages");
+  // const q = messagesRef;
+
+  const q = query(messagesRef, orderBy('createdAt'), limit(25));
+
+  const [messages] = useCollectionData(q, {idField: 'id'});
+  
+
+  console.log(messages);
   
   return (
       <div>
-          <div>Welcome to the chatroom</div>
+        <div>Welcome to the chatroom</div>
+
+        <div className='message-grid'>
+          {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+        </div>
       </div>
+  )
+}
+
+function ChatMessage(props) {
+  const { text, uid, photoURL } = props.message;
+
+  const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+
+  return (
+    <div className={`message ${messageClass}`}>
+      <img src={photoURL} />
+      <p>{text}</p>   
+    </div>
   )
 }
 

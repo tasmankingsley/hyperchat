@@ -25,6 +25,30 @@
 
 .container {
   display: grid;
-  height: 100vh;
-  place-items: center;
+  height: 100%;
+  /* place-items: center; */
+}
+
+.message-grid {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: repeat(25, 50px);
+  width: 100%;
+  justify-items: right;
+
+  gap: 20px;
+}
+
+.message {
+  display: grid;
+  background-color: #99caf2;
+  /* place-items: center; */
+  width: 200px;
+  
+  border-radius: 50px;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1rem;
 }
