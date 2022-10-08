@@ -56,7 +56,7 @@ function SignIn() {
   return (
       <div className='sign-in-div'>
           <div className='welcome'>Welcome to hyperchat!</div>
-          <p>A simple public chat room where anyone <br/> can sign in to have a conversation.</p>
+          <p>Hyperchat is a simple public chat room where <br/> anyone can sign in to have a conversation.</p>
           <button className='sign-in' onClick={signInWithGoogle}>Sign in</button>
       </div>
   )
