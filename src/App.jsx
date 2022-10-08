@@ -4,7 +4,7 @@ import './App.css';
 // import ChatRoom from './ChatRoom';
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, doc, setDoc, query, orderBy, limit } from "firebase/firestore";
+import { getFirestore, collection, query, orderBy, limit } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -54,7 +54,9 @@ function SignIn() {
   }  
 
   return (
-      <div>
+      <div className='sign-in-div'>
+          <div className='welcome'>Welcome to hyperchat!</div>
+          <p>A simple public chat room where anyone <br/> can sign in to have a conversation.</p>
           <button className='sign-in' onClick={signInWithGoogle}>Sign in</button>
       </div>
   )
@@ -82,9 +84,7 @@ function ChatRoom() {
   
   return (
       <div>
-        <div>Welcome to the chatroom</div>
-
-        <div className='message-grid'>
+        <div className='chat-grid'>
           {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
         </div>
       </div>
@@ -97,9 +97,9 @@ function ChatMessage(props) {
   const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
 
   return (
-    <div className={`message ${messageClass}`}>
-      <img src={photoURL} />
-      <p>{text}</p>   
+    <div className={`message-img-container ${messageClass}`}>
+      <p className='message'>{text}</p>   
+      <img src={auth.currentUser.photoURL} />
     </div>
   )
 }

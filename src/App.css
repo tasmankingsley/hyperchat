@@ -2,7 +2,8 @@
   display: grid;
   grid-template-columns: 1fr 100px;
   top: 0;
-  background-color: #1a1b24;
+  background-color: #16161d;
+  border-bottom: 2px solid #8fcefa;
   height: 50px;
   line-height: 50px;
 }
@@ -14,9 +15,22 @@
   color: #8fcefa;
 }
 
+.sign-in-div {
+  display: grid;
+  grid-template-rows: 100px 1fr 100px;
+  place-items: center;
+}
+
 .sign-in {
   font-size: 1.2rem;
   padding: 5px 10px;
+}
+
+.welcome {
+  display: grid;
+  height: 60px;
+  font-size: 1.2rem;
+  place-items: center;
 }
 
 .sign-out {
@@ -26,29 +40,48 @@
 .container {
   display: grid;
   height: 100%;
+  margin: 5px;
   /* place-items: center; */
 }
 
-.message-grid {
+.chat-grid {
   display: grid;
+  flex-direction: column;
   grid-auto-flow: row;
-  grid-template-rows: repeat(25, 50px);
+  grid-auto-rows: auto;
   width: 100%;
+  height: 100%;
   justify-items: right;
+  gap: 10px;
+}
 
-  gap: 20px;
+.message-img-container {
+  display: grid;
+  max-width: 50%;
+  grid-template-areas: 'text img';
+  grid-template-columns: 1fr 40px;
+  grid-auto-rows: 1fr;
+  align-items: center;
+  gap: 5px;
+}
+
+.received {
+  
 }
 
 .message {
-  display: grid;
+  grid-area: text;
   background-color: #99caf2;
-  /* place-items: center; */
-  width: 200px;
-  
-  border-radius: 50px;
-}
-
-p {
+  min-width: 50px;
+  min-height: 20px;
+  padding: 10px;
+  border-radius: 20px;
   font-size: 1rem;
   line-height: 1rem;
+}
+
+img {
+  grid-area: img;
+  border-radius: 50%;
+  width: 40px;
 }

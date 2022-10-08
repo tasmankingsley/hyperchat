@@ -3,8 +3,8 @@
   font-size: 20px;
   font-weight: 400;
 
-  background-color: #000;
-  color: #f5f5f3;
+  background-color: #1a1b25;
+  color: #1a1b23;
 
   margin: 0 auto;
   text-align: center;
@@ -19,17 +19,20 @@ body {
 
 button {
   border-radius: 4px;
-  border: 1px solid transparent;
-  padding: 5px 7px;
+  border: 2px solid #99caf2;
+  padding: 4px 6px;
   font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
-  background-color: #f5f5f3;
+  background-color: #16161d;
+  color: #99caf2;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s;
 }
 button:hover {
   border-color: #99caf2;
+  background-color: #99caf2;
+  color: #16161d;
 }
 button:focus,
 button:focus-visible {
