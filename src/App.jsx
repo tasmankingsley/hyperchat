@@ -1,11 +1,12 @@
 import './App.css';
+import { useRef, useState } from 'react';
 // import Header from './Header';
 // import SignIn from './SignIn';
 // import ChatRoom from './ChatRoom';
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, orderBy, limit } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore, collection, query, orderBy, limit, serverTimestamp, addDoc } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signInWithEmailAndPassword, signInAnonymously } from "firebase/auth";
 
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
@@ -50,14 +51,19 @@ function App() {
 function SignIn() {
   const signInWithGoogle = () => {
       const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider);
-  }  
+      signInWithRedirect(auth, provider);
+  }
+
+  // const signInAnonymously = () => {
+
+  // } 
 
   return (
       <div className='sign-in-div'>
           <div className='welcome'>Welcome to hyperchat!</div>
           <p>Hyperchat is a simple public chat room where <br/> anyone can sign in to have a conversation.</p>
-          <button className='sign-in' onClick={signInWithGoogle}>Sign in</button>
+          <button className='sign-in' onClick={signInWithGoogle}>Sign in with Google</button>
+          {/* <button className='sign-in' onClick={signInAnonymously}>Sign in anonymously</button> */}
       </div>
   )
 }
@@ -72,13 +78,36 @@ function SignOut() {
 
 function ChatRoom() {
 
+  const ghost_div = useRef()
+  
+
   const messagesRef = collection(db, "messages");
-  // const q = messagesRef;
 
   const q = query(messagesRef, orderBy('createdAt'), limit(25));
 
   const [messages] = useCollectionData(q, {idField: 'id'});
+
+  const [formValue, setFormValue] = useState('');
+
   
+  const sendMessage = async(e) => {
+
+    e.preventDefault();
+
+    const { uid, photoURL } = auth.currentUser;
+
+    await addDoc(messagesRef, {
+      text: formValue,
+      createdAt: serverTimestamp(),
+      uid,
+      photoURL
+    });
+
+    setFormValue('');
+
+    ghost_div.current.scrollIntoView({ behaviour: 'smooth' });
+
+  };
 
   console.log(messages);
   
@@ -87,6 +116,13 @@ function ChatRoom() {
         <div className='chat-grid'>
           {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
         </div>
+
+        <form className='form' onSubmit={sendMessage}>
+          <input value={formValue} onChange={(e) => {setFormValue(e.target.value)}} placeholder='say something to the chat' />
+          <button type='submit'>send</button>
+        </form>
+
+        <div className='ghost-div' ref={ghost_div}></div>
       </div>
   )
 }
@@ -97,9 +133,9 @@ function ChatMessage(props) {
   const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
 
   return (
-    <div className={`message-img-container ${messageClass}`}>
-      <p className='message'>{text}</p>   
-      <img src={auth.currentUser.photoURL} />
+    <div className={`message-img-div ${messageClass}`}>
+      <p className={`message  message-${messageClass}`}>{text}</p>   
+      <img src={photoURL} />
     </div>
   )
 }
