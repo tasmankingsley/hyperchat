@@ -51,7 +51,7 @@ function App() {
 function SignIn() {
   const signInWithGoogle = () => {
       const provider = new GoogleAuthProvider();
-      signInWithRedirect(auth, provider);
+      signInWithPopup(auth, provider);
   }
 
   // const signInAnonymously = () => {
